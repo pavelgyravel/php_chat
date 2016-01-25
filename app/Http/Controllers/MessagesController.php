@@ -9,8 +9,19 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use Request;
+
 class MessagesController extends Controller
 {
+
+    public function __construct()
+    {
+        $allUsers = User::all();
+        $currentUserId = Auth::user()->id;
+
+        view()->share('allUsers', $allUsers);
+        view()->share('currentUserId', $currentUserId);
+    }
     /**
      * Show all of the message threads to the user.
      *
@@ -26,7 +37,7 @@ class MessagesController extends Controller
         $threads = Thread::forUser($currentUserId)->latest('updated_at')->get();
         // All threads that user is participating in, with new messages
         // $threads = Thread::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();
-        return view('messenger.index', compact('threads', 'currentUserId'));
+        return view('messenger.index', compact('threads'));
     }
     /**
      * Shows a message thread.
@@ -104,7 +115,8 @@ class MessagesController extends Controller
     public function update($id)
     {
         try {
-            $thread = Thread::findOrFail($id);
+            //$thread = Thread::findOrFail($id);
+            $thread = Thread::between([Auth::id(), $id])->first();
         } catch (ModelNotFoundException $e) {
             Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
             return redirect('messages');
@@ -131,6 +143,52 @@ class MessagesController extends Controller
         if (Input::has('recipients')) {
             $thread->addParticipants(Input::get('recipients'));
         }
-        return redirect('messages/' . $id);
+
+        return $thread->messages()->where('created_at', '>', Input::get('last'))->with('user')->get();
+    }
+
+    /**
+     * Shows a message thread.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function user($id)
+    {   
+        if (Auth::id() != $id) {
+            $thread = Thread::between([Auth::id(), $id])->first();
+            
+            if ($thread == null) {
+                $thread = Thread::create(
+                    [
+                        'subject' => "Thread between 2 users",
+                    ]
+                );
+                Participant::create(
+                    [
+                        'thread_id' => $thread->id,
+                        'user_id'   => Auth::user()->id,
+                        'last_read' => new Carbon,
+                    ]
+                );
+                $thread->addParticipants([$id]);
+            }
+
+            
+            return view('messenger.show', compact('thread', 'id'));    
+
+        } else {
+            return redirect('messages');
+        }
+    }
+
+    public function getMessages($id) {
+        
+        if (Auth::id() != $id) {
+            $thread = Thread::between([Auth::id(), $id])->first();
+            return $thread->messages()->where('created_at', '>', Input::get('last'))->with('user')->get();
+        } else {
+            return redirect('messages');
+        }
     }
 }

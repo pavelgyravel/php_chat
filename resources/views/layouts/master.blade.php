@@ -8,6 +8,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -15,14 +16,10 @@
       <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-    body {
-      padding-top: 55px;
-    }
-    </style>
+    
   </head>
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse " role="navigation">
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -38,16 +35,26 @@
                 <li class="active"><a href="{{URL::to('messages')}}">Messages @include('messenger.unread-count')</a></li>
                 <li><a href="{{URL::to('messages/create')}}">New Message</a></li>
               </ul>
+              <ul class="nav navbar-nav navbar-right">
+                
+                <li><a href="/auth/logout">Logout</a></li>
+              </ul>
             </div><!--/.nav-collapse -->
           </div>
         </nav>
     <div class="container">
-        @yield('content')
+      <div class="row">
+          
+          <div class="col-md-3">
+            @include('partials.users')
+          </div>
+        
+          <div class="col-md-9">
+            @yield('content')
+          </div>
+        </div>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/js/require.js" data-main="/js/app"></script>
   </body>
 </html>

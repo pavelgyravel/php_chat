@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/messages');
 });
 
 /*
@@ -26,24 +26,34 @@ Route::get('/', function () {
 |
 */
 
+
+
 Route::group(['middleware' => ['web']], function () {
     //
     Route::get('auth/login', 'Auth\AuthController@getLogin');
-	Route::post('auth/login', 'Auth\AuthController@postLogin');
-	Route::get('auth/logout', 'Auth\AuthController@getLogout');
+    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-	// Registration routes...
-	Route::get('auth/register', 'Auth\AuthController@getRegister');
-	Route::post('auth/register', 'Auth\AuthController@postRegister');
+    // Registration routes...
+    Route::get('auth/register', 'Auth\AuthController@getRegister');
+    Route::post('auth/register', 'Auth\AuthController@postRegister');
+
 });
 
 
-Route::group(['prefix' => 'messages', 'middleware' => ['web']], function () {
+
+
+Route::group(['prefix' => 'messages', 'middleware' => ['web', 'auth']], function () {
+    Route::put('user/{id}/new', ['as' => 'messages.user.new', 'uses' => 'MessagesController@getMessages']);
+
+    Route::get('user/{id}', ['as' => 'messages.user', 'uses' => 'MessagesController@user']);
+    Route::post('user/{id}', ['as' => 'messages.user', 'uses' => 'MessagesController@user']);
     Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
     Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
     Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
     Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
-    Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+
+    Route::put('user/{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
 });
 
 

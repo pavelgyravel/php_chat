@@ -1,41 +1,37 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="col-md-6">
-        <h1>{!! $thread->subject !!}</h1>
-
-        @foreach($thread->messages as $message)
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img src="//www.gravatar.com/avatar/{!! md5($message->user->email) !!}?s=64" alt="{!! $message->user->name !!}" class="img-circle">
-                </a>
-                <div class="media-body">
-                    <h5 class="media-heading">{!! $message->user->name !!}</h5>
-                    <p>{!! $message->body !!}</p>
-                    <div class="text-muted"><small>Posted {!! $message->created_at->diffForHumans() !!}</small></div>
+    
+        <!-- <h1>{!! $thread->subject !!}</h1> -->
+        <div class="JQ_messages">
+            @foreach($thread->messages as $message)
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="media-heading"><b>{!! $message->user->name !!}</b> <small>(Posted {!! $message->created_at !!})</small></h5>
+                        <p>{!! $message->body !!}</p>
+                    </div>
                 </div>
-            </div>
-        @endforeach
-
-        <h2>Add a new message</h2>
-        {!! Form::open(['route' => ['messages.update', $thread->id], 'method' => 'PUT']) !!}
-        <!-- Message Form Input -->
-        <div class="form-group">
-            {!! Form::textarea('message', null, ['class' => 'form-control']) !!}
-        </div>
-
-        @if($users->count() > 0)
-        <div class="checkbox">
-            @foreach($users as $user)
-                <label title="{!! $user->name !!}"><input type="checkbox" name="recipients[]" value="{!! $user->id !!}">{!! $user->name !!}</label>
             @endforeach
         </div>
-        @endif
+        
+        
+        {!! Form::open(['route' => ['messages.update', $id], 'method' => 'PUT', 'class' => 'JQ_message_form']) !!}
+        <!-- Message Form Input -->
+        <div class="form-group">
+            {!! Form::text('message', null, ['class' => 'form-control', 'placeholder' => 'Message...']) !!}
+            @if(count($thread->messages) >0 )
+                {{ Form::hidden('last', $thread->messages->last()->created_at, ['class' => 'JQ_last']) }}
+            @else
+                {{ Form::hidden('last', null, ['class' => 'JQ_last']) }}
+            @endif
 
+            
+
+        </div>
         <!-- Submit Form Input -->
         <div class="form-group">
             {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
         </div>
         {!! Form::close() !!}
-    </div>
+    
 @stop

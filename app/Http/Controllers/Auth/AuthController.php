@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+use Auth;
+use Session;
+
 class AuthController extends Controller
 {
     /*
@@ -28,7 +31,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/messages';
 
     /**
      * Create a new authentication controller instance.
@@ -37,7 +40,15 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => 'getLogout']);
+    }
+
+    public function getLogout()
+    {
+        
+        Auth::logout();
+        Session::flush();
+        return redirect('/auth/login');
     }
 
     /**
@@ -69,4 +80,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+
 }
