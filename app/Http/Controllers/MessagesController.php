@@ -19,6 +19,14 @@ class MessagesController extends Controller
         $allUsers = User::all();
         $currentUserId = Auth::user()->id;
 
+        foreach ($allUsers as $i => $user) {
+            $thread = Thread::between([$currentUserId, $user->id])->first();
+            if ($thread != null) {
+                $allUsers[$i]['unread'] = $thread->isUnread($currentUserId);
+                $allUsers[$i]['thread'] = $thread->id;
+            }
+        }
+
         view()->share('allUsers', $allUsers);
         view()->share('currentUserId', $currentUserId);
     }
@@ -174,6 +182,9 @@ class MessagesController extends Controller
                 $thread->addParticipants([$id]);
             }
 
+            $thread->markAsRead(Auth::id());
+
+
             
             return view('messenger.show', compact('thread', 'id'));    
 
@@ -183,12 +194,18 @@ class MessagesController extends Controller
     }
 
     public function getMessages($id) {
-        
+
         if (Auth::id() != $id) {
             $thread = Thread::between([Auth::id(), $id])->first();
-            return $thread->messages()->where('created_at', '>', Input::get('last'))->with('user')->get();
+            $thread->markAsRead(Auth::id());
+            return $thread->messages()->where('created_at', '>', Input::get('last'))->with('user')->with('participants')->get();
         } else {
             return redirect('messages');
         }
     }
+
+    public function newMessages() {
+        return Thread::forUserWithNewMessages(Auth::user()->id)->latest('updated_at')->get();
+    }
+
 }

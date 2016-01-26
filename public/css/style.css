@@ -28,7 +28,7 @@ body {
 
 .current_chat_user {
   color: #23527c;
-    text-decoration: underline;
+  text-decoration: underline;
   font-weight: bold;
 }
 
@@ -37,19 +37,23 @@ body {
   border-bottom: 0;
 }
 
-/*.chat_user:before {
-  content: '';
-  position: absolute;
-  height: 8px;
-  width: 8px;
-  top: 50%;
-  left: 0px;
-  margin-top: -3px;
-  border-radius: 15px;
-  border: 1px solid #e7e7e7;
+.chat_user a {
+  display: block;
 }
 
-.online:before {
+.new_message a:after {
+  content: '';
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  top: 2px;
+  right: 0px;
+  border-radius: 15px;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABaUlEQVRIS+1V0U0CQRSctw2IHWgFagXSgVqB7h7/YgVCBWIB7HJ//kkHYgf45S8lnAWwYx45zHEiy5mQaMJ+vszN7JuZzQl2fGTH/NgLJB3+GxaFEE4BXCSvWwPM5/O3xQYJgjzGOBWRg6YCJD++BGKMl+sIROQdwBPJOwAFgEFCLBeRUYxRcUUyg+Fw2BWRBxE5s9ZOQwgtkj0At7ULKXHPWjtTR0g+k8xXBLz3EwDnlQ8fAbQAXOuM5MAY07fWFiXJAMCsQtwmeQ+grfgY49U2G6j/JxVRtanrnMuXsxDCCvFyLiLHohYYY74FqA3odDpj7z1/CFe3HQG4Wd64itOAsyxrifdeQUd1EpITY8yE5EvT9pT4V+dce6NFy4B/I0Cyn2VZrx7yuHxQhXPusNxuEXDTowGrxSsCWkEA+mpnWrc1rdpaRwNWjo0WaTtijIvKNTmanbVWS7D/H6SNS77kNMVmxP8X+ASHjqgW5+XzDwAAAABJRU5ErkJggg==');
+                                                                      
+}
+
+/*.online:before {
   border-color: #68E83E;
   background: #68E83E;
 }*/
@@ -62,4 +66,13 @@ body {
 .badge {
   float: right;
     margin-right: 20px;
+}
+
+.animate-message {
+ animation: animate-bg 3s linear; 
+}
+
+@keyframes animate-bg {
+  from { background-color: rgba(200,200,200,1);}
+  to { background-color: rgba(200,200,200,0); }
 }

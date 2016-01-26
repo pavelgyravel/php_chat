@@ -7,7 +7,7 @@
     <title>Packages</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/components/bootstrap/dist/css/bootstrap.min.css' />
     <link rel="stylesheet" href="/css/style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -49,11 +49,14 @@ Route::group(['prefix' => 'messages', 'middleware' => ['web', 'auth']], function
     Route::get('user/{id}', ['as' => 'messages.user', 'uses' => 'MessagesController@user']);
     Route::post('user/{id}', ['as' => 'messages.user', 'uses' => 'MessagesController@user']);
     Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
+
+    Route::get('newMessages', ['as' => 'messages.newMessages', 'uses' => 'MessagesController@newMessages']);
     Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
     Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
     Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
 
     Route::put('user/{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+
 });
 
 
