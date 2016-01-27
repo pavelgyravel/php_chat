@@ -81,5 +81,9 @@ class AuthController extends Controller
         ]);
     }
 
+    public function blocked() {
+        return "You was blocked by admin";
+    }
+
 
 }

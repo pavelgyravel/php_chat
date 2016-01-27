@@ -31,12 +31,9 @@
               <a class="navbar-brand" href="{{URL::to('/')}}">Home</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="{{URL::to('messages')}}">Messages @include('messenger.unread-count')</a></li>
-                <li><a href="{{URL::to('messages/create')}}">New Message</a></li>
-              </ul>
+              
               <ul class="nav navbar-nav navbar-right">
-                
+                <li><a href="/user/profile">Profile</a></li>
                 <li><a href="/auth/logout">Logout</a></li>
               </ul>
             </div><!--/.nav-collapse -->

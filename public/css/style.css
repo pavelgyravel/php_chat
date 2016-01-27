@@ -38,25 +38,20 @@ body {
 }
 
 .chat_user a {
-  display: block;
+  
 }
 
-.new_message a:after {
+.new_message .chat_user_link:after {
   content: '';
   position: absolute;
   height: 24px;
   width: 24px;
   top: 2px;
-  right: 0px;
+  right: 20px;
   border-radius: 15px;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABaUlEQVRIS+1V0U0CQRSctw2IHWgFagXSgVqB7h7/YgVCBWIB7HJ//kkHYgf45S8lnAWwYx45zHEiy5mQaMJ+vszN7JuZzQl2fGTH/NgLJB3+GxaFEE4BXCSvWwPM5/O3xQYJgjzGOBWRg6YCJD++BGKMl+sIROQdwBPJOwAFgEFCLBeRUYxRcUUyg+Fw2BWRBxE5s9ZOQwgtkj0At7ULKXHPWjtTR0g+k8xXBLz3EwDnlQ8fAbQAXOuM5MAY07fWFiXJAMCsQtwmeQ+grfgY49U2G6j/JxVRtanrnMuXsxDCCvFyLiLHohYYY74FqA3odDpj7z1/CFe3HQG4Wd64itOAsyxrifdeQUd1EpITY8yE5EvT9pT4V+dce6NFy4B/I0Cyn2VZrx7yuHxQhXPusNxuEXDTowGrxSsCWkEA+mpnWrc1rdpaRwNWjo0WaTtijIvKNTmanbVWS7D/H6SNS77kNMVmxP8X+ASHjqgW5+XzDwAAAABJRU5ErkJggg==');
                                                                       
 }
-
-/*.online:before {
-  border-color: #68E83E;
-  background: #68E83E;
-}*/
 
 .edit_user {
   position: absolute;
